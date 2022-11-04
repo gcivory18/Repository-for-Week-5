@@ -68,7 +68,7 @@ class Menu {
         `);
     }
 
-    showMovieMenuOptions(movieInfo) { //should this be add actor instead?
+    showMovieMenuOptions(movieInfo) {
         return prompt(`
         0) back
         1) name an actor
@@ -96,10 +96,10 @@ class Menu {
         let index = prompt('Enter the index of the movie you want to view:');
         if (index > -1 && index < this.movies.length) {
             this.selectedMovie = this.movies[index];
-            let description = 'Movie Name: ' + this.selectedMovie.name + '\n'; //wanted this converted to a template string
+            let description = 'Movie Name: ' + this.selectedMovie.name + '\n'; 
 
             for (let i = 0; i < this.selectedMovie.actors.length; i++) {
-                description += i + ') ' + this.selectedMovie.actors[i].name + " - "  + this.selectedMovie.actors[i].character + '\n' ; //When I tested my menu in the browser an error was thrown for this line. It needed to be converted to a template literal, after I did this it worked!
+                description += i + ') ' + this.selectedMovie.actors[i].name + " - "  + this.selectedMovie.actors[i].character + '\n' ;
             }
 
             let selection = this.showMovieMenuOptions(description);
