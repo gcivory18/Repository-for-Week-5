@@ -71,8 +71,8 @@ class Menu {
     showMovieMenuOptions(movieInfo) { //should this be add actor instead?
         return prompt(`
         0) back
-        1) name movie
-        2) delete movie
+        1) name an actor
+        2) delete an actor
         ----------------------------
         ${movieInfo}
         `);
@@ -84,7 +84,7 @@ class Menu {
         for (let i = 0; i < this.movies.length; i++) {
             movieString += i + ') ' + this.movies[i].name + '\n';
         }
-        alert(moviesString);
+        alert(movieString);
     }
 
     nameMovie() {
@@ -96,24 +96,41 @@ class Menu {
         let index = prompt('Enter the index of the movie you want to view:');
         if (index > -1 && index < this.movies.length) {
             this.selectedMovie = this.movies[index];
-            let description = 'Movie Name:' + this.selectedMovie.name + '\n';
+            let description = 'Movie Name: ' + this.selectedMovie.name + '\n'; //wanted this converted to a template string
 
             for (let i = 0; i < this.selectedMovie.actors.length; i++) {
-                description += i + ') ' `${this.selectedMovie.actors[i].name} - ${this.selectedMovie.actors[i].character}\n` ; //When I tested my menu in the browser an error was thrown for this line. It needed to be converted to a template literal, after I did this it worked!
+                description += i + ') ' + this.selectedMovie.actors[i].name + " - "  + this.selectedMovie.actors[i].character + '\n' ; //When I tested my menu in the browser an error was thrown for this line. It needed to be converted to a template literal, after I did this it worked!
             }
 
             let selection = this.showMovieMenuOptions(description);
             switch (selection) {
                 case '1':
-                    this.nameMovie();
+                    this.nameActor();
                     break;
                 case '2':
-                    this.deleteMovie(); //these will reference the actors below
+                    this.deleteActor(); 
             }
         }
     }
-    //create actor and delete actor, 2 functions with their own prompts - add similar to the movie with actor information. index of the player you want to delete
-}
+    deleteMovie() {
+        let index = prompt('Enter the index of the movie you want to delete:');
+        if (index > -1 && index < this.movies.length) {
+            this.movies.splice(index, 1);
+        }
+    }
 
+    nameActor() {
+        let name = prompt('Enter name of new actor:');
+        let character = prompt('Enter the character name for the new actor:');
+        this.selectedMovie.actors.push(new Actor(name, character));
+    }
+    
+    deleteActor() {
+        let index = prompt('Enter the index of the actor you want to delete:');
+        if (index > -1 && index < this.selectedMovie.actors.length) {
+            this.selectedMovie.actors.splice(index, 1);
+        }
+    }
+}
 let menu = new Menu();
 menu.start();
